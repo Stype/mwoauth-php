@@ -10,7 +10,7 @@ $consumerSecret = 'f2b6f6ccc47e9f6b298eaa74789897b98dc6a594';
 // $client->setExtraParam('title','Special:OAuth/whatever') for each step.
 // If your wiki uses wgSecureLogin, the canonicalServerUrl will point to http://
 $config = new MWOAuthClientConfig(
-	'https://localhost/wiki/index.php?title=Special:OAuth', // url to use
+	'https://localhost/w/index.php?title=Special:OAuth', // url to use
 	true, // do we use SSL? (we should probably detect that from the url)
 	false // do we validate the SSL certificate? Always use 'true' in production.
 );
