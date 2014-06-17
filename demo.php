@@ -15,6 +15,7 @@ $config = new MWOAuthClientConfig(
 	false // do we validate the SSL certificate? Always use 'true' in production.
 );
 $config->canonicalServerUrl = 'http://localhost';
+$config->redirURL = 'https://localhost/view/Special:OAuth?';
 
 $cmrToken = new OAuthToken( $consumerKey, $consumerSecret );
 $client = new MWOAuthClient( $config, $cmrToken );

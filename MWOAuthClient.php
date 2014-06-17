@@ -16,6 +16,12 @@ class MWOAuthClientConfig {
 	// Canonical server url, used to check /identify's iss
 	public $canonicalServerUrl;
 
+	// Url that the user is sent to. Can be different from
+	// $endpointURL to play nice with MobileFrontend, etc.
+	public $redirURL = null;
+
+	// Use https when calling the server.
+	// TODO: detect this from $endpointURL
 	public $useSSL = true;
 
 	// If you're testing against a server with self-signed certificates, you
@@ -80,7 +86,8 @@ class MWOAuthClient {
 			throw new Exception( "Callback wasn't confirmed" );
 		}
 		$requestToken = new OAuthToken( $return->key, $return->secret );
-		$url = $this->config->endpointURL . "/authorize&oauth_token={$requestToken->key}&oauth_consumer_key={$this->consumerToken->key}";
+		$url = $this->config->redirURL ?: $this->config->endpointURL . "/authorize&";
+		$url .= "oauth_token={$requestToken->key}&oauth_consumer_key={$this->consumerToken->key}";
 
 		return array( $url, $requestToken );
 	}
