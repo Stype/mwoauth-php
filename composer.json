@@ -1,6 +1,7 @@
 {
 	"name": "mwoauth-php/mwoauth-php",
 	"description": "PHP client that does OAuth with MediaWiki",
+	"version": "0.1",
 	"license": "GNU GPL v2",
 	"authors": [
 		{
