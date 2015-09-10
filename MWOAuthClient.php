@@ -234,11 +234,12 @@ class MWOAuthClient {
 
 
 	private function decodeJWT( $JWT, $secret ) {
+		$JWT = strtr( $JWT, '-_', '+/' );
 		list( $headb64, $bodyb64, $sigb64 ) = explode( '.', $JWT );
 
-		$header = json_decode( $this->urlsafeB64Decode( $headb64 ) );
-		$payload = json_decode( $this->urlsafeB64Decode( $bodyb64 ) );
-		$sig = $this->urlsafeB64Decode( $sigb64 );
+		$header = json_decode( base64_decode( $headb64 ) );
+		$payload = json_decode( base64_decode( $bodyb64 ) );
+		$sig = base64_decode( $sigb64 );
 
 		// MediaWiki will only use sha256 hmac (HS256) for now. This check makes sure
 		// an attacker doesn't return a JWT with 'none' signature type.
@@ -273,15 +274,6 @@ class MWOAuthClient {
 			return false;
 		}
 		return true;
-	}
-
-	private function urlsafeB64Decode( $input ) {
-		$remainder = strlen( $input ) % 4;
-		if ( $remainder ) {
-			$padlen = 4 - $remainder;
-			$input .= str_repeat( '=', $padlen );
-		}
-		return base64_decode( strtr( $input, '-_', '+/' ) );
 	}
 
 	// Constant time comparison
